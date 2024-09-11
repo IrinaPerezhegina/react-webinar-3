@@ -1,3 +1,5 @@
+import { getCode } from "./utils";
+
 /**
  * Хранилище состояния приложения
  */
@@ -5,6 +7,7 @@ class Store {
   constructor(initState = {}) {
     this.state = initState;
     this.listeners = []; // Слушатели изменений состояния
+    this.code = getCode(initState.list.length) // Получение кода 
   }
 
   /**
@@ -42,11 +45,17 @@ class Store {
    * Добавление новой записи
    */
   addItem() {
-    this.setState({
-      ...this.state,
-      list: [...this.state.list, { code: this.state.list.length + 1, title: 'Новая запись' }],
-    });
-  }
+		this.setState({
+			...this.state,
+			list: [
+				...this.state.list,
+				{
+					code: this.code(),
+					title: "Новая запись",
+				},
+			],
+		});
+	}
 
   /**
    * Удаление записи по коду
@@ -64,16 +73,25 @@ class Store {
    * @param code
    */
   selectItem(code) {
-    this.setState({
-      ...this.state,
-      list: this.state.list.map(item => {
-        if (item.code === code) {
-          item.selected = !item.selected;
-        }
-        return item;
-      }),
-    });
-  }
+		this.setState({
+			...this.state,
+			list: this.state.list.map((item) => {
+				if (item.code === code) {
+					item.selected = !item.selected;
+					if (item.selected) {
+            if (item.count) {
+              item.count = item.count + 1;
+            } else {
+              item.count = 1;
+            }
+					}
+				} else {
+					item.selected = false;
+				}
+				return item;
+			}),
+		});
+	}
 }
 
 export default Store;

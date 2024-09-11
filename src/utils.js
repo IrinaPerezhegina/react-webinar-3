@@ -26,3 +26,34 @@ export function createElement(name, props = {}, ...children) {
 
   return element;
 }
+
+// Получение окончание слова раз в зависимости от склонения номера 
+export const getEnding = (num) => {
+	return ['2', '3', '4']
+		.some((item) => {
+			return item === num
+						.toString()
+						.slice(num.toString().length - 1);
+	}) &&
+		!['12', '13', '14']
+			.some((item) => {
+				return (
+					item === num
+						.toString()
+						.slice(num.toString().length - 2, num.toString().length)
+			);
+		})
+		? `раза`
+		: `раз`
+};
+
+
+// Получение последующего числа икрементированием
+export const getCode= (num) => {
+	var max  = num
+	
+	function increment() {
+		return  ++max
+	  }
+	return increment;
+}

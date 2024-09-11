@@ -1,5 +1,5 @@
 import React from 'react';
-import { createElement } from './utils.js';
+import { createElement, getEnding } from './utils.js';
 import './styles.css';
 
 /**
@@ -21,18 +21,24 @@ function App({ store }) {
       <div className="App-center">
         <div className="List">
           {list.map(item => (
-            <div key={item.code} className="List-item">
-              <div
-                className={'Item' + (item.selected ? ' Item_selected' : '')}
-                onClick={() => store.selectItem(item.code)}
-              >
-                <div className="Item-code">{item.code}</div>
-                <div className="Item-title">{item.title}</div>
-                <div className="Item-actions">
-                  <button onClick={() => store.deleteItem(item.code)}>Удалить</button>
-                </div>
-              </div>
-            </div>
+           <div key={item.code} className="List-item">
+           <div
+             className={"Item" + (item.selected ? " Item_selected" : "")}
+             onClick={() => store.selectItem(item.code)}
+           >
+             <div className="Item-code">{item.code}</div>
+             <div className="Item-title">
+               {item.title}{" "}
+               {item?.count && item.count !== 0 &&
+                 `| Выделяли ${item.count} ${getEnding(item.count)}`}
+             </div>
+             <div className="Item-actions">
+               <button onClick={() => store.deleteItem(item.code)}>
+                 Удалить
+               </button>
+             </div>
+           </div>
+         </div>
           ))}
         </div>
       </div>
