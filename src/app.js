@@ -1,5 +1,5 @@
 import React from 'react';
-import { createElement, getEnding } from './utils.js';
+import { createElement,  pluralFunc } from './utils.js';
 import './styles.css';
 
 /**
@@ -30,7 +30,11 @@ function App({ store }) {
              <div className="Item-title">
                {item.title}{" "}
                {item?.count && item.count !== 0 &&
-                 `| Выделяли ${item.count} ${getEnding(item.count)}`}
+                 `| Выделяли ${item.count} ${pluralFunc(item.count,{
+                  one: "раз",
+                  few: "раза",
+                  many: "раз",})}`
+                }
              </div>
              <div className="Item-actions">
                <button onClick={() => store.deleteItem(item.code)}>

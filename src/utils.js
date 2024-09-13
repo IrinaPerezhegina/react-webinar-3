@@ -49,7 +49,7 @@ export const getEnding = (num) => {
 
 
 // Получение последующего числа икрементированием
-export const getCode= (num) => {
+ const getCode = (num) => {
 	var max  = num
 	
 	function increment() {
@@ -57,3 +57,13 @@ export const getCode= (num) => {
 	  }
 	return increment;
 }
+
+// Получение ключа для каждого item разного 
+export const generateCode=getCode(0)
+
+
+// Функция плюрализации
+export function pluralFunc(data, declension = {}) {
+	const quantity = new Intl.PluralRules("ru-RU").select(data);
+	return declension[quantity];
+  }

@@ -1,4 +1,4 @@
-import { getCode } from "./utils";
+import { generateCode, getCode } from "./utils";
 
 /**
  * Хранилище состояния приложения
@@ -7,7 +7,7 @@ class Store {
   constructor(initState = {}) {
     this.state = initState;
     this.listeners = []; // Слушатели изменений состояния
-    this.code = getCode(initState.list.length) // Получение кода 
+    // this.code = getCode(initState.list.length) // Получение кода 
   }
 
   /**
@@ -50,7 +50,7 @@ class Store {
 			list: [
 				...this.state.list,
 				{
-					code: this.code(),
+					code: generateCode(),
 					title: "Новая запись",
 				},
 			],
