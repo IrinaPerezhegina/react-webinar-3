@@ -1,0 +1,37 @@
+.Card {
+    display: flex;
+    justify-content: flex-end;
+    padding: 18px 20px;
+    display: flex;
+    border-bottom: 1px dashed #ccc;
+ 
+}
+
+.Card-btn button {
+  height: 21px;
+  width: 80px;
+  padding-top: 4px;
+  cursor: pointer;
+}
+
+.Card-content{
+  align-items: center;
+  margin-right: 18px;
+  display:flex;
+  justify-content: flex-end;
+  line-height: 23.44px;
+}
+
+.Card-content span:last-child{
+ padding-left:8px;
+ white-space: 1.2;
+ font-size: 20px;
+ font-weight: 700;
+
+
+}
+.Card-content span:first-child{
+  font-size: 15px;
+  line-height: 23.44px;
+  letter-spacing: 1.7px;
+ }

@@ -1,0 +1,46 @@
+.ItemCart {
+  display: flex;
+  justify-content: flex-start;
+  transition: background-color 1s;
+ 
+}
+
+.ItemCart_selected {
+  background: #75aaf1;
+  color: #fff;
+}
+
+.ItemCart-code {
+  padding: 20px 20px 20px 20px;
+}
+
+.ItemCart-title {
+  width: 100%;
+  padding: 20px 10px;
+}
+.ItemCart-price {
+  font-size: 1.2rem;
+  width: 50%;
+  text-align:right;
+  white-space: nowrap;
+  padding: 20px 10px;
+}
+.ItemCart-count {
+  font-size: 1.2rem;
+  width: 20%;
+  text-align:right;
+  white-space: nowrap;
+  padding: 20px 10px;
+}
+
+.ItemCart-actions {
+  display: flex;
+  justify-content: flex-end;
+  padding: 20px 20px 20px 10px;
+}
+
+.ItemCart-actions button {
+  height: 21px;
+  width: 76px;
+  cursor: pointer;
+}

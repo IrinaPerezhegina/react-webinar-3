@@ -50,6 +50,37 @@ class Store {
     });
   }
 
+/**
+   * Добавление товаров в карзину
+   * @param code
+   */
+addToCart(obj) {
+  const findOfObject = this.state.cart.find((item) => item.code === obj.code);
+  if (!findOfObject || this.state.cart.length === 0) {
+    this.setState({
+      ...this.state,
+      cart: [
+        ...this.state.cart,
+        { code: obj.code, count: 1, price: obj.price, title: obj.title },
+      ],
+    });
+  } else {
+    this.setState({
+      ...this.state,
+      cart: this.state.cart.map((item) => {
+        if (item.code === obj.code) {
+          return {
+            ...item,
+            count: item.count + 1,
+          };
+        }
+        return item;
+      }),
+    });
+  }
+}
+
+
   /**
    * Удаление записи по коду
    * @param code
@@ -81,6 +112,20 @@ class Store {
         // Сброс выделения если выделена
         return item.selected ? { ...item, selected: false } : item;
       }),
+    });
+  }
+
+
+  /**
+   * Удаление товара из корзины
+   * @param code
+   */
+  deleteItemCart(code) {
+    console.log(code);
+    this.setState({
+      ...this.state,
+      // Новый список, в котором не будет удаляемой записи
+      cart: this.state.cart.filter((item) => item.code !== code),
     });
   }
 }
