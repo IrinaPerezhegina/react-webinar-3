@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import "./style.css";
 import ListCart from "../list-сart";
 
-function Modal({ cart, visible, setVisible, onDeleteItemCart }) {
+function Modal({ cart, visible, setVisible, onDeleteItemCart = () => {} }) {
   return (
     <div className={visible ? `Modal active` : "Modal"}>
       <div className="Modal-content" onClick={(e) => e.stopPropagation()}>
@@ -23,8 +23,6 @@ Modal.propTypes = {
   setVisible: PropTypes.func.isRequired,
   onDeleteItemCart: PropTypes.func,
 };
-Modal.defaultProps = {
-  onDeleteItemFromCart: () => {},
-};
+
 
 export default React.memo(Modal);

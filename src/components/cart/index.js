@@ -10,7 +10,6 @@ function Cart({ cart, setVisible }) {
         <span>В корзине: </span>
         {cart.length !== 0 ? (
           <span>
-            {" "}
             {cart.length}{" "}
             {`${plural(cart.length, {
               one: "товар",
@@ -24,7 +23,6 @@ function Cart({ cart, setVisible }) {
         )}
       </div>
       <div className="Card-btn">
-        {" "}
         <button onClick={() => setVisible(true)}>Перейти</button>
       </div>
     </div>

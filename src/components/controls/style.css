@@ -2,4 +2,8 @@
   display: flex;
   justify-content: flex-end;
   padding: 20px;
+  cursor: pointer;
+}
+.Controls button{
+  cursor: pointer;
 }

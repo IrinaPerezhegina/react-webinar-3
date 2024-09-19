@@ -40,9 +40,6 @@ ItemCart.propTypes = {
   onClick: PropTypes.func,
 };
 
-ItemCart.defaultProps = {
-  onDelete: () => {},
-  onSelect: () => {},
-};
+
 
 export default React.memo(ItemCart);

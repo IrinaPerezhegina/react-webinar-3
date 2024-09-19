@@ -4,7 +4,7 @@ import "./style.css";
 import ItemCart from "../item-сart";
 import { getTypeOfNumber, getFullAmount } from "../../utils";
 
-function ListCart({ cart, onDeleteItem }) {
+function ListCart({ cart, onDeleteItem = () => {} }) {
   return (
     <div className="ListCart">
       {cart.length ? (
@@ -33,8 +33,6 @@ ListCart.propTypes = {
   onDeleteItem: PropTypes.func,
 };
 
-ListCart.defaultProps = {
-  onDeleteItem: () => {},
-};
+
 
 export default React.memo(ListCart);

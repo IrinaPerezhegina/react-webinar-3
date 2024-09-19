@@ -121,7 +121,6 @@ addToCart(obj) {
    * @param code
    */
   deleteItemCart(code) {
-    console.log(code);
     this.setState({
       ...this.state,
       // Новый список, в котором не будет удаляемой записи
