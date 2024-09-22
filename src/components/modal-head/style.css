@@ -1,0 +1,19 @@
+.ModalHead{
+  align-items: center;
+  border-radius: 10px;
+  display: flex;
+  justify-content:space-between;
+  background: #f5f5f5;
+  padding: 20px 30px 20px 20px;
+  margin-bottom: 72px;
+}
+
+.ModalHead h1 {
+  margin: 0;
+}
+
+.ModalHead button {
+  height: 21px;
+  width: 76px;
+  cursor: pointer;
+}

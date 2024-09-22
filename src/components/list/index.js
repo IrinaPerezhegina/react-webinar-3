@@ -2,25 +2,28 @@ import React from "react";
 import PropTypes from "prop-types";
 import Item from "../item";
 import "./style.css";
+import ItemCart from "../item-сart";
 
-function List({ list, onDeleteItem = () => {} , onSelectItem = () => {} , onAddToCart = () => {}  }) {
- if (list) {
+function List({ list, cart, onDeleteItem= () => {}, onSelectItem=() => {}, onAddToCart= () => {}, }) {
+  const date = list ? list : cart;
   return (
     <div className="List">
-      {list.map((item) => (
+      {date.map((item) => (
         <div key={item.code} className="List-item">
-          <Item
-            item={item}
-            onDelete={onDeleteItem}
-            onSelect={onSelectItem}
-            onAddToCart={onAddToCart}
-          />
+          {list ? (
+            <Item
+              item={item}
+              onAddToCart={onAddToCart}
+              onDelete={onDeleteItem}
+              onSelect={onSelectItem}
+            />
+          ) : (
+            <ItemCart item={item} onDelete={onDeleteItem} />
+          )}
         </div>
       ))}
     </div>
   );
- }
-  
 }
 
 List.propTypes = {
@@ -28,7 +31,12 @@ List.propTypes = {
     PropTypes.shape({
       code: PropTypes.number,
     })
-  ).isRequired,
+  ),
+  cart: PropTypes.arrayOf(
+    PropTypes.shape({
+      code: PropTypes.number,
+    })
+  ),
   onDeleteItem: PropTypes.func,
   onSelectItem: PropTypes.func,
   onAddToCart: PropTypes.func,
