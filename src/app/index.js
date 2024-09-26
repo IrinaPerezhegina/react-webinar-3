@@ -1,21 +1,16 @@
-import { useCallback, useContext, useEffect, useState } from 'react';
-import Main from './main';
-import Basket from './basket';
-import useStore from '../store/use-store';
-import useSelector from '../store/use-selector';
+import { Navigate, Route, Routes } from "react-router-dom";
+import config from "../config.json"
+import Main from "./main";
+import Article from "./article";
 
-/**
- * Приложение
- * @returns {React.ReactElement}
- */
 function App() {
-  const activeModal = useSelector(state => state.modals.name);
 
   return (
-    <>
-      <Main />
-      {activeModal === 'basket' && <Basket />}
-    </>
+    <Routes>
+        <Route path={config.url} element={<Main />} />
+        <Route path={`/${config.url}/:id`} element={<Article />} />
+        <Route path={`/`} element={<Navigate to={config.url} />} />
+    </Routes>
   );
 }
 

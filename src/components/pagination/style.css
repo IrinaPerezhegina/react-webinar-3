@@ -1,0 +1,36 @@
+.Pagination{
+    padding-right:22px;
+    margin-top: 23px;
+    display: flex;
+   justify-content: flex-end;
+  }
+  .Pagination-points{
+    width:18px; 
+    padding: 1px;
+    height:18px; 
+    text-align: center;
+    
+  }
+  .Pagination-page{
+    padding: 2px;
+    min-width:19px; 
+    height:19px; 
+    text-align: center;
+    cursor: pointer;
+  }
+
+  .Pagination-page:hover{
+    cursor: pointer;
+    background-color: #E1E1E1;
+  }
+
+  .Pagination-active{
+    padding:2px;
+    text-align: center;
+    color:    #FFFFFF;
+    background-color: #0087E9;
+    min-width:19px; 
+    height: 19px;
+    cursor: pointer;
+
+  }

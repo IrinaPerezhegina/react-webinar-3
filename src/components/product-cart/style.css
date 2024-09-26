@@ -1,0 +1,38 @@
+.ProductCart{
+    display: flex;
+    flex-direction: column;
+    gap:19.3px;
+    margin: auto;
+    width: 943px;
+    padding-top: 20px;
+    height: 100vh;
+    font-size: 18px;
+
+}
+.ProductCart div{
+    display: flex;
+    gap: 7px;
+
+}
+.ProductCart span{
+    font-weight: 700;
+    font-size: 18px;
+
+}
+
+.ProductCart div:nth-child(5) span{
+    font-weight: 700;
+    font-size: 24px;
+
+}
+
+.ProductCart div:nth-child(5) span:first-child{
+   margin-right: 9px;
+
+}
+
+.ProductCart button{
+    width: 76px;
+    height: 21px;
+ 
+ }
