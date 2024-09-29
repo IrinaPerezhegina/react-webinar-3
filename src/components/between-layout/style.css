@@ -1,0 +1,8 @@
+.BetweenLayout {
+  display: flex;
+  justify-content: flex-start;
+  flex-wrap: nowrap;
+  padding-left: 18px;
+  align-items: center;
+  justify-content: space-between;
+}

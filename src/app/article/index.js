@@ -1,8 +1,6 @@
 import { memo, useCallback, useEffect } from "react";
 import useStore from "../../store/use-store";
 import useSelector from "../../store/use-selector";
-import PageLayout from "../../components/page-layout";
-import Basket from "../basket";
 import Head from "../../components/head";
 import BasketTool from "../../components/basket-tool";
 import { useParams } from "react-router-dom";
@@ -10,12 +8,14 @@ import ProductCart from "../../components/product-cart";
 import Language from "../../components/language";
 import Navbar from "../../components/navbar";
 import useTranslation from "../../i18n/useTranslation";
+import BetweenLayout from "../../components/between-layout";
 
 function Article() {
   const store = useStore();
 
   const select = useSelector((state) => ({
-    list: state.catalog.list,
+    list:state.catalog.list,
+    data: state.article.data,
     productById: state.catalog.productById,
     amount: state.basket.amount,
     sum: state.basket.sum,
@@ -24,19 +24,24 @@ function Article() {
   const { t }=useTranslation()
   const { id } = useParams();
 
-  // получение данных об состоянии модального окна
-  const activeModal = useSelector((state) => state.modals.name);
+ // Загрузка данных о товаре по его ID
+useEffect(() => {
+  if (select.list.length===0) {
+    store.actions.catalog.loadById(id);
+  }
+}, [id, select.list]);
+
 
   // Загрузка данных о товаре по его ID
   useEffect(() => {
-    store.actions.catalog.loadById(id);
+    store.actions.article.loadById(id);
   }, [id]);
 
   const callbacks = {
     // Добавление товара в корзину
     addToBasket: useCallback(
       (_id) => store.actions.basket.addToBasket(_id),
-      [store, select.status]
+      [store]
     ),
     // Открытие любой модалки
     openModalBasket: useCallback(
@@ -54,16 +59,14 @@ function Article() {
   };
 
   return (
-    <PageLayout
-      head={<Head title={select.productById.title} />}
-      navbar={
-        <Navbar
+  <>
+    <Head title={select.data.title} />
+    <BetweenLayout>
+      <Navbar
           onChange={callbacks.onChangePage}
           link={t('main')}
-        />
-      }
-      basketTool={
-        <BasketTool
+      />
+      <BasketTool
           onOpen={callbacks.openModalBasket}
           amount={select.amount}
           sum={select.sum}
@@ -71,21 +74,19 @@ function Article() {
           pass={t('pass')}
           inCart={t('inCart')}
           lang={select.lang}
-        />
-      }
-    >
+      />
+      </BetweenLayout>
       <ProductCart
         producingСountry={t('producingСountry')}
         category={t('category')}
         yearOfRelease={t('yearOfRelease')}
         price={t('price')}
         add={t('add')}
-        productById={select.productById}
+        productById={select.data}
         onAdd={callbacks.addToBasket}
       />
-      {activeModal === "basket" && <Basket />}
       <Language onChange={callbacks.onChangeLang} lang={select.lang} />
-    </PageLayout>
+      </>
   );
 }
 

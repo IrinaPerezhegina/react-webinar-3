@@ -1,17 +1,16 @@
 import { memo, useCallback, useEffect, useState } from "react";
 import Item from "../../components/item";
-import PageLayout from "../../components/page-layout";
 import Head from "../../components/head";
 import BasketTool from "../../components/basket-tool";
 import List from "../../components/list";
 import useStore from "../../store/use-store";
 import useSelector from "../../store/use-selector";
-import Basket from "../basket";
 import Pagination from "../../components/pagination";
 import Language from "../../components/language";
 import Navbar from "../../components/navbar";
 import { useNavigate } from "react-router-dom";
 import useTranslation from "../../i18n/useTranslation";
+import BetweenLayout from "../../components/between-layout";
 
 function Main() {
   const store = useStore();
@@ -20,25 +19,23 @@ function Main() {
     list: state.catalog.list,
     count: state.catalog.count,
     page: state.catalog.page,
+    limit: state.catalog.limit,
     amount: state.basket.amount,
     sum: state.basket.sum,
     lang: state.dictionary.lang,
   }));
   const navigate = useNavigate();
-  const limit = 10;
+
   // Получение целого данных всех страниц
-  const totalPages = Math.ceil(select.count / limit);
+  const totalPages = Math.ceil(select.count / select.limit);
   const { t }=useTranslation()
 
 
   // Загрузка данных для пагинации
   useEffect(() => {
-    let skip = (select.page - 1) * limit;
-    store.actions.catalog.loadListPagination(limit, skip);
+    let skip = (select.page - 1) * select.limit;
+    store.actions.catalog.loadListPagination(select.limit, skip);
   }, [select.page]);
-
-  // Получение данных об состоянии модального окна
-  const activeModal = useSelector((state) => state.modals.name);
 
   const callbacks = {
     // Добавление в корзину
@@ -88,15 +85,13 @@ function Main() {
   };
 
   return (
-    <PageLayout
-      head={<Head title={t('shop')} />}
-      navbar={
+   <>
+      <Head title={t('shop')} />
+      <BetweenLayout>
         <Navbar
-          onChange={callbacks.onChangePage}
-          link={t('main')}
+            onChange={callbacks.onChangePage}
+            link={t('main')}
         />
-      }
-      basketTool={
         <BasketTool
           onOpen={callbacks.openModalBasket}
           amount={select.amount}
@@ -106,17 +101,15 @@ function Main() {
           inCart={t('inCart')}
           lang={select.lang}
         />
-      }
-    >
+      </BetweenLayout>
       <List list={select.list} renderItem={renders.item} />
-      {activeModal === "basket" && <Basket />}
       <Pagination
         totalPages={totalPages}
         page={select.page}
         changPage={callbacks.onChangePage}
       />
       <Language onChange={callbacks.onChangeLang} lang={select.lang} />
-    </PageLayout>
+      </>
   );
 }
 

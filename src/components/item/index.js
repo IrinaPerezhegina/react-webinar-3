@@ -11,7 +11,6 @@ function Item(props) {
      onAdd,
      onChangeLink,
   } = props
-console.log(add);
 
   const cn = bem("Item");
 

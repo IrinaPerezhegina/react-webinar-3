@@ -13,6 +13,7 @@ class Catalog extends StoreModule {
       productById: {},
       count: 0,
       page: 1,
+      limit:10
     };
   }
   onChangePage(p) {
@@ -54,16 +55,6 @@ class Catalog extends StoreModule {
     this.setState(
       {
         ...this.getState(),
-        productById: {
-          _id,
-          categoryTitle,
-          title,
-          description,
-          madeTitle,
-          edition,
-          price,
-          code,
-        },
         list: [
           {
             _id,

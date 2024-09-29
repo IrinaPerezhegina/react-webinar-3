@@ -24,6 +24,7 @@ function Basket() {
     closeModal: useCallback(() => store.actions.modals.close(), [store]),
   };
 
+
   const renders = {
     itemBasket: useCallback(
       item => {
