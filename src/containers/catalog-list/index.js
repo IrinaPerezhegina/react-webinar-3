@@ -22,7 +22,6 @@ function CatalogList() {
     count: state.catalog.count,
     waiting: state.catalog.waiting,
   }));
-
   const callbacks = {
     // Добавление в корзину
     addToBasket: useCallback(_id => store.actions.basket.addToBasket(_id), [store]),
@@ -57,6 +56,7 @@ function CatalogList() {
       [callbacks.addToBasket, t],
     ),
   };
+
 
   return (
     <Spinner active={select.waiting}>

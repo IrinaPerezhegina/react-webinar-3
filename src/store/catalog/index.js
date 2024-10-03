@@ -1,4 +1,4 @@
-import StoreModule from '../module';
+import StoreModule from "../module";
 
 /**
  * Состояние каталога - параметры фильтра и список товара
@@ -14,8 +14,9 @@ class CatalogState extends StoreModule {
       params: {
         page: 1,
         limit: 10,
-        sort: 'order',
-        query: '',
+        sort: "order",
+        query: "",
+        category: "",
       },
       count: 0,
       waiting: false,
@@ -31,12 +32,18 @@ class CatalogState extends StoreModule {
   async initParams(newParams = {}) {
     const urlParams = new URLSearchParams(window.location.search);
     let validParams = {};
-    if (urlParams.has('page')) validParams.page = Number(urlParams.get('page')) || 1;
-    if (urlParams.has('limit'))
-      validParams.limit = Math.min(Number(urlParams.get('limit')) || 10, 50);
-    if (urlParams.has('sort')) validParams.sort = urlParams.get('sort');
-    if (urlParams.has('query')) validParams.query = urlParams.get('query');
-    await this.setParams({ ...this.initState().params, ...validParams, ...newParams }, true);
+    if (urlParams.has("page"))
+      validParams.page = Number(urlParams.get("page")) || 1;
+    if (urlParams.has("limit"))
+      validParams.limit = Math.min(Number(urlParams.get("limit")) || 10, 50);
+    if (urlParams.has("sort")) validParams.sort = urlParams.get("sort");
+    if (urlParams.has("query")) validParams.query = urlParams.get("query");
+    if (urlParams.has("category"))
+      validParams.category = urlParams.get("category");
+    await this.setParams(
+      { ...this.initState().params, ...validParams, ...newParams },
+      true
+    );
   }
 
   /**
@@ -67,27 +74,41 @@ class CatalogState extends StoreModule {
         params,
         waiting: true,
       },
-      'Установлены параметры каталога',
+      "Установлены параметры каталога"
     );
 
     // Сохранить параметры в адрес страницы
     let urlSearch = new URLSearchParams(params).toString();
-    const url = window.location.pathname + '?' + urlSearch + window.location.hash;
+    const url =
+      window.location.pathname + "?" + urlSearch + window.location.hash;
     if (replaceHistory) {
-      window.history.replaceState({}, '', url);
+      window.history.replaceState({}, "", url);
     } else {
-      window.history.pushState({}, '', url);
+      window.history.pushState({}, "", url);
     }
 
-    const apiParams = {
-      limit: params.limit,
-      skip: (params.page - 1) * params.limit,
-      fields: 'items(*),count',
-      sort: params.sort,
-      'search[query]': params.query,
-    };
+    const apiParams =
+      this.getState().params.category === ""
+        ? {
+            limit: params.limit,
+            skip: (params.page - 1) * params.limit,
+            fields: "items(*),count",
+            sort: params.sort,
+            "search[query]": params.query,
+          }
+        : {
+            limit: params.limit,
+            skip: (params.page - 1) * params.limit,
+            fields: "items(*),count",
+            sort: params.sort,
+            "search[query]": params.query,
+            "search[category]": params.category,
+          };
 
-    const response = await fetch(`/api/v1/articles?${new URLSearchParams(apiParams)}`);
+    const response = await fetch(
+      `/api/v1/articles?${new URLSearchParams(apiParams)}`
+    );
+
     const json = await response.json();
     this.setState(
       {
@@ -96,7 +117,7 @@ class CatalogState extends StoreModule {
         count: json.result.count,
         waiting: false,
       },
-      'Загружен список товаров из АПИ',
+      "Загружен список товаров из АПИ"
     );
   }
 }

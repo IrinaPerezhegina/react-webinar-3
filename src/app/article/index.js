@@ -37,7 +37,7 @@ function Article() {
   };
 
   return (
-    <PageLayout>
+   <>
       <Head title={select.article.title}>
         <LocaleSelect />
       </Head>
@@ -45,7 +45,7 @@ function Article() {
       <Spinner active={select.waiting}>
         <ArticleCard article={select.article} onAdd={callbacks.addToBasket} t={t} />
       </Spinner>
-    </PageLayout>
+      </>
   );
 }
 

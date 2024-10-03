@@ -16,5 +16,13 @@
     "few": "товара",
     "many": "товаров",
     "other": "товара"
-  }
+  },
+  "entry": "Вход",
+  "article.country":"Страна производитель",
+  "article.category":"Категория",
+  "article.year":"Год выпуска",
+  "enter":"Вход",
+  "login":"Логин",
+  "password":"Пароль"
+
 }

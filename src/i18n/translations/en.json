@@ -14,5 +14,13 @@
   "basket.articles": {
     "one": "article",
     "other": "articles"
-  }
+  },
+  "entry": "Entry",
+  "article.country":"Country of origin",
+  "article.category":"Category",
+  "article.year":"Year of issue",
+  "enter":"Enter",
+  "password":"Password",
+  "login":"Login"
+
 }

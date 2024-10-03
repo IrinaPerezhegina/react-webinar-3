@@ -33,3 +33,28 @@ export function codeGenerator(start = 0) {
 export function numberFormat(value, locale = 'ru-RU', options = {}) {
   return new Intl.NumberFormat(locale, options).format(value);
 }
+
+// Получение списка категорий
+export function getCategories(date) {
+  const array = [{ value: "", title: "Все" }];
+
+  const getArray = (parentId, child, index = 1) => {
+    date.forEach((item) => {
+      if (parentId === item.parent?._id) {
+        child.push({
+          value: item._id,
+          title: `${"- ".repeat(index)}${item.title}`,
+        });
+        getArray(item._id, child, index + 1);
+      }
+    });
+  };
+
+  date.forEach((el) => {
+    if (!el.parent) {
+      array.push({ value: el._id, title: el.title });
+      getArray(el._id, array);
+    }
+  });
+  return array;
+}

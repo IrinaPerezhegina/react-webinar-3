@@ -44,10 +44,4 @@ Input.propTypes = {
   theme: PropTypes.string,
 };
 
-Input.defaultProps = {
-  onChange: () => {},
-  type: 'text',
-  theme: '',
-};
-
 export default memo(Input);
