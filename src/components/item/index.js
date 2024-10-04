@@ -6,6 +6,9 @@ import './style.css';
 import { Link } from 'react-router-dom';
 
 function Item(props) {
+  const {
+    labelCurr="₽"
+  }=props
   const cn = bem('Item');
 
   const callbacks = {
@@ -14,13 +17,12 @@ function Item(props) {
 
   return (
     <div className={cn()}>
-      {/*<div className={cn('code')}>{props.item._id}</div>*/}
       <div className={cn('title')}>
         <Link to={props.link}>{props.item.title}</Link>
       </div>
       <div className={cn('actions')}>
         <div className={cn('price')}>
-          {numberFormat(props.item.price)} {props.labelCurr}
+          {numberFormat(props.item.price)} {labelCurr}
         </div>
         <button onClick={callbacks.onAdd}>{props.labelAdd}</button>
       </div>

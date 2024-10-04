@@ -16,11 +16,16 @@
     "other": "articles"
   },
   "entry": "Entry",
+  "exit": "Exit",
   "article.country":"Country of origin",
   "article.category":"Category",
   "article.year":"Year of issue",
   "enter":"Enter",
   "password":"Password",
-  "login":"Login"
+  "login":"Login",
+  "profile":"Profile",
+  "name":"Name",
+  "phone":"Phone",
+  "email":"email"
 
 }

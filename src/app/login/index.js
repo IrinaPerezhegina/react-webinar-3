@@ -6,7 +6,7 @@ import Head from "../../components/head";
 import LocaleSelect from "../../containers/locale-select";
 import LoginForm from "../../components/login-form";
 import useSelector from "../../hooks/use-selector";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 /**
  * Главная страница - первичная загрузка каталога
  */
@@ -17,13 +17,15 @@ function Login() {
     error: state.auth.errorMessage,
   }));
 
+const navigate= useNavigate()
+
   useEffect(() => {
     store.actions.auth.resetErrors();
   }, [pathname]);
 
   const callbacks = {
     handleSubmit: useCallback(
-      (data) => store.actions.auth.login(data),
+      (data) => store.actions.auth.login(data, ()=>navigate(-1))
       [store]
     ),
   };

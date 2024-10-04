@@ -27,7 +27,7 @@ function App() {
 
   useInit(
     () => {
-      store.actions.auth.loadUser();
+      store.actions.auth.loadUserAuth();
     },
     [],
     true

@@ -17,7 +17,7 @@ class AuthState extends StoreModule {
     };
   }
 
-  async login(data) {
+  async login(data, callback) {
     this.setState({
       ...this.getState(),
       waiting: true,
@@ -32,9 +32,11 @@ class AuthState extends StoreModule {
     });
 
     if (response.ok) {
+      callback()
       const json = await response.json();
       const { name, phone } = json.result.user.profile;
       const { email } = json.result.user;
+
       localStorage.setItem("TOKEN_KEY", json.result.token);
       this.setState(
         {
@@ -47,6 +49,7 @@ class AuthState extends StoreModule {
         },
         "Авторизация пользователя"
       );
+
     } else {
       const json = await response.json();
       const error = json.error.data.issues.map((er) => er.message);
@@ -101,7 +104,7 @@ class AuthState extends StoreModule {
     }
   }
   // Загрузка авторизованного юзера
-  async loadUser() {
+  async loadUserAuth() {
     // Установка признака ожидания загрузки
     this.setState({
       ...this.getState(),
@@ -118,18 +121,16 @@ class AuthState extends StoreModule {
       });
       const json = await response.json();
       const {
-        email,
-        profile: { name, phone },
+        profile: {name},
       } = json.result;
       // User загружен успешно
       this.setState(
         {
           ...this.getState(),
-          userInfo: { email, name, phone },
           waiting: false,
           userName: name,
         },
-        "Загружена информация об пользователе"
+        "Загружена информация об авторизованном пользователе"
       );
     } catch (e) {
       // Ошибка при загрузке

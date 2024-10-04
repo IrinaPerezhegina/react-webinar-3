@@ -18,11 +18,15 @@
     "other": "товара"
   },
   "entry": "Вход",
+  "exit": "Выход",
   "article.country":"Страна производитель",
   "article.category":"Категория",
   "article.year":"Год выпуска",
-  "enter":"Вход",
+  "enter":"Войти",
   "login":"Логин",
-  "password":"Пароль"
-
+  "password":"Пароль",
+  "profile":"Профиль",
+  "name":"Имя",
+  "phone":"Телефон",
+  "email":"email"
 }
