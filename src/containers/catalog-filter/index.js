@@ -35,22 +35,21 @@ function CatalogFilter() {
       [store],
     ),
   };
-
+  const { t } = useTranslate();
   const options = {
     // Варианты сортировок
     sort: useMemo(
       () => [
-        { value: 'order', title: 'По порядку' },
-        { value: 'title.ru', title: 'По именованию' },
-        { value: '-price', title: 'Сначала дорогие' },
-        { value: 'edition', title: 'Древние' },
+        { value: 'order', title: t('in order') },
+        { value: 'title.ru', title: t('by naming')  },
+        { value: '-price', title: t('dear ones first') },
+        { value: 'edition', title: t('ancient')  },
       ],
-      [],
     ),
     // Категории для фильтра
     categories: useMemo(
       () => [
-        { value: '', title: 'Все' },
+        { value: '', title: t('all') },
         ...treeToList(listToTree(select.categories), (item, level) => ({
           value: item._id,
           title: '- '.repeat(level) + item.title,
@@ -60,7 +59,7 @@ function CatalogFilter() {
     ),
   };
 
-  const { t } = useTranslate();
+
 
   return (
     <SideLayout padding="medium">
@@ -73,7 +72,7 @@ function CatalogFilter() {
       <Input
         value={select.query}
         onChange={callbacks.onSearch}
-        placeholder={'Поиск'}
+        placeholder={t('search')}
         delay={1000}
         theme={'big'}
       />

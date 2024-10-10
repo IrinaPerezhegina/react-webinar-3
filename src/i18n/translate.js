@@ -1,12 +1,6 @@
 import * as translations from './translations';
 
-/**
- * Перевод фразу по словарю
- * @param lang {String} Код языка
- * @param text {String} Текст для перевода
- * @param [plural] {Number} Число для плюрализации
- * @returns {String} Переведенный текст
- */
+// Функция для перевода
 export default function translate(lang, text, plural) {
   let result = translations[lang] && text in translations[lang] ? translations[lang][text] : text;
 

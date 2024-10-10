@@ -6,8 +6,8 @@ import './style.css';
 
 function BasketTool(props) {
   const { sum = 0, amount = 0, onOpen = () => {}, t = text => text } = props;
-
   const cn = bem('BasketTool');
+  
   return (
     <div className={cn()}>
       <span className={cn('label')}>{t('basket.inBasket')}</span>

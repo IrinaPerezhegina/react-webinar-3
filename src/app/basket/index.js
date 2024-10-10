@@ -1,8 +1,7 @@
-import { memo, useCallback } from 'react';
+import { memo, useCallback} from 'react';
 import { useDispatch, useStore as useStoreRedux } from 'react-redux';
 import useStore from '../../hooks/use-store';
 import useSelector from '../../hooks/use-selector';
-import useInit from '../../hooks/use-init';
 import useTranslate from '../../hooks/use-translate';
 import ItemBasket from '../../components/item-basket';
 import List from '../../components/list';
@@ -13,11 +12,13 @@ import modalsActions from '../../store-redux/modals/actions';
 function Basket() {
   const store = useStore();
   const dispatch = useDispatch();
+  const { t, lang } = useTranslate();
 
   const select = useSelector(state => ({
     list: state.basket.list,
     amount: state.basket.amount,
     sum: state.basket.sum,
+    
   }));
 
   const callbacks = {
@@ -29,8 +30,6 @@ function Basket() {
       dispatch(modalsActions.close());
     }, [store]),
   };
-
-  const { t } = useTranslate();
 
   const renders = {
     itemBasket: useCallback(
@@ -44,7 +43,7 @@ function Basket() {
           labelDelete={t('basket.delete')}
         />
       ),
-      [callbacks.removeFromBasket, t],
+      [callbacks.removeFromBasket, lang],
     ),
   };
 

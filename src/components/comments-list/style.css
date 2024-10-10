@@ -1,0 +1,11 @@
+.Comments {
+  padding: 30px 40px;
+  position: relative;
+}
+
+.Comments-title{
+  display: block;
+  font-size: 24px;
+  padding-bottom: 15px;
+}
+

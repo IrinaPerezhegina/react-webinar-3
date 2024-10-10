@@ -1,0 +1,22 @@
+.FormComponent {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  display:flex;
+}
+
+.FormComponent button{
+ height: 21px;
+}
+
+.FormComponent-btn{
+  cursor: pointer;
+  display: flex;
+  gap: 10px;
+}
+
+.FormComponent-btn button{
+  cursor: pointer;
+}
+
+ 

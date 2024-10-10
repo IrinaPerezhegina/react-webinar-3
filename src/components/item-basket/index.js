@@ -1,6 +1,5 @@
-import { memo, useCallback } from 'react';
+import { memo } from 'react';
 import { cn as bem } from '@bem-react/classname';
-import propTypes from 'prop-types';
 import numberFormat from '../../utils/number-format';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
@@ -16,7 +15,6 @@ function ItemBasket(props) {
 
   return (
     <div className={cn()}>
-      {/*<div className={cn('code')}>{props.item._id}</div>*/}
       <div className={cn('title')}>
         {props.link ? (
           <Link to={props.link} onClick={props.onLink}>
