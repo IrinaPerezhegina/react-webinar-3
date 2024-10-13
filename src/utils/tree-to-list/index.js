@@ -13,5 +13,5 @@ export default function treeToList( tree, callback, level = 0, result = []) {
     if (item.children?.length) treeToList(item.children, callback, level + 1, result);
   }
 
-    return result.filter((item)=> item._id!==undefined ||item.title!==undefined);
+    return result
 }

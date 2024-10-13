@@ -18,6 +18,7 @@ const Comment=React.forwardRef((props,ref)=> {
   } = props
 
 const cn = bem("Comment");
+// console.log(comment);
 
 const content = isComment ? (
   <>
@@ -34,7 +35,7 @@ const content = isComment ? (
   </div>
   <span 
     className={cn("link")} 
-    onClick={()=>onAnswer({ _id: "100", name: comment?.author?.profile.name, parent:{_type:"comment", _id: comment._id}})}
+    onClick={()=>onAnswer({ _id: "100",_type:"comment", name: comment?.author?.profile.name, parent:{_type:"comment", _id: comment._id, }})}
     >
       {t("answer")}
   </span>

@@ -45,11 +45,7 @@ function Login() {
         e.preventDefault();
         store.actions.session.signIn(data, () => {
           // Возврат на страницу, с которой пришли
-          const back =
-            location.state?.back && location.state?.back !== location.pathname
-              ? location.state?.back
-              : '/';
-          navigate(back);
+          navigate(-1);
         });
       },
       [data, location.state],

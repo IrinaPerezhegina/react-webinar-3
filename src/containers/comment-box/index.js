@@ -1,4 +1,4 @@
-import { memo, useCallback,useMemo, useRef } from "react";
+import { memo, useCallback,useEffect,useMemo, useRef, useState } from "react";
 import { useParams } from "react-router-dom";
 import useStore from "../../hooks/use-store";
 import { useDispatch } from "react-redux";
@@ -11,7 +11,6 @@ import listToTree from "../../utils/list-to-tree";
 import treeToList from "../../utils/tree-to-list";
 import useSelector from "../../hooks/use-selector";
 import Comment from "../../components/comment";
-import Pagination from "../../components/pagination";
 import getMargins from "../../utils/get-margins";
 import useTranslate from "../../hooks/use-translate";
 import Spinner from "../../components/spinner";
@@ -22,6 +21,7 @@ function CommentBox() {
   const scollToRef = useRef(null);
   const { id } = useParams();
   const { t } = useTranslate()
+  const [comments, setComments]=useState([])
 
   const select = useSelector(
     (state) => ({
@@ -36,43 +36,55 @@ const selectRedux = useSelectorRedux(
     comments: state.comment.comments,
     data: state.article.data,
     count: state.comment.count,
-    page: state.comment.params.page,
-    limit: state.comment.params.limit,
     waiting:state.comment.waiting,
   }),
   shallowequal
 );
 
-const changedData = selectRedux.comments.map((item) => {
+const changedData = comments.map((item) => {
     if (item?.parent?._type === "article") {
       item.parent = {};
     }
     return item;
 });
 
+ // Создание ответа на комментарий
+const onAddFormForComment = (data) => {
+  setComments(prev => 
+    prev.map(obj =>
+      obj._id === selectRedux.data._id ? ({
+        ...data,
+        fakeComment:true
+     }) : obj)
+  )
+  setTimeout(() => scollToRef?.current?.scrollIntoView( {behavior: "smooth" , block:"center"}), 50);
+}
+
 const callbacks = {
        // Создание комментария
     onSubmit: useCallback(
         (data) => {
           dispatch(
-            commentActions.createComment({
-              data,
-              id: id,
-            })
+            commentActions.createComment({data,id:id})
           );
-          dispatch(commentActions.onAddFormForArticle(id))
+          callbacks.onCancel()
         },
         [store]
       ),
-    onAddFormForComment: useCallback(
-     (data) => {
-        dispatch(commentActions.onAddCommentForm(data))
-        setTimeout(() => scollToRef?.current?.scrollIntoView( {behavior: "smooth" , block:"center"}), 50);
-      },
-      [store]
-    ),
-    onCancel: useCallback(() => dispatch(commentActions.onAddFormForArticle(id)), [store]),
-    onPaginate: useCallback(page => dispatch(commentActions.onTurnPage(page)), [store]),
+      // Отмена создания ответа на комментарий
+     onCancel: useCallback(() => {
+        if (selectRedux.data) {
+          setComments(prev => 
+            prev.map(obj =>
+              obj._id === "100" ? ({
+                 _id: selectRedux.data._id ||"100", 
+                 parent:{}, _type: "article", 
+                 fakeComment:true
+             }) : obj)
+          )
+        }
+      },[comments, onAddFormForComment]),
+
   };
 
  // Нужно указать функцию для сравнения свойства объекта, так как хуком вернули объект
@@ -87,9 +99,15 @@ const callbacks = {
         _id: item._id,
         text: item.text,
       })),
-    [ selectRedux.comments]
+    [ comments]
   ),
 };
+
+useEffect(()=>{
+  if(selectRedux.comments &&selectRedux.data._id)
+  setComments([...selectRedux.comments,{ _id:selectRedux.data._id, parent:{}, _type: "article", fakeComment:true} ])
+},[selectRedux.waiting])
+
 
 const renders = {
   comment: useCallback(comment => (
@@ -101,7 +119,7 @@ const renders = {
       data={dateСonverter(comment.dateCreate)} 
       exist={select.exists} 
       isComment={comment.fakeComment === true ? false : true} 
-      onAnswer={callbacks.onAddFormForComment} 
+      onAnswer={onAddFormForComment} 
       onCancel={callbacks.onCancel}
       comment={comment} 
       onSubmit={callbacks.onSubmit}
@@ -117,12 +135,6 @@ return (
           list={options.comments}
           count={selectRedux.count} 
         />
-          {selectRedux.count > 10 &&<Pagination
-          count={selectRedux.count}
-          page={selectRedux.page}
-          limit={selectRedux.limit}
-          onChange={callbacks.onPaginate}
-      />} 
       </Spinner>
       
        

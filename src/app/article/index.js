@@ -27,7 +27,6 @@ function Article() {
     (state) => ({
       data: state.article.data,
       waiting: state.article.waiting,
-      page:state.comment.params.page,
     }),
     shallowequal
   );
@@ -37,11 +36,7 @@ function Article() {
       dispatch(articleActions.load(id)),
       dispatch(commentActions.load(id)),
     ]);
-  }, [id, lang, selectRedux.page]);
-
-  useInit(async () => {
-    dispatch(commentActions.resetParams())
-  }, [id]);
+  }, [id, lang]);
 
    const callbacks = {
     addToBasket: useCallback(
