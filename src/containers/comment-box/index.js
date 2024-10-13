@@ -47,7 +47,7 @@ const changedData = comments.map((item) => {
     }
     return item;
 });
-console.log(comments);
+
 
  // Создание ответа на комментарий
 const onAddFormForComment = (data) => {
