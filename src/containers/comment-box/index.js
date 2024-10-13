@@ -47,12 +47,13 @@ const changedData = comments.map((item) => {
     }
     return item;
 });
+console.log(comments);
 
  // Создание ответа на комментарий
 const onAddFormForComment = (data) => {
   setComments(prev => 
     prev.map(obj =>
-      obj._id === selectRedux.data._id ? ({
+      obj._id === selectRedux.data._id || obj._id === "100" ? ({
         ...data,
         fakeComment:true
      }) : obj)

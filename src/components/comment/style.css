@@ -21,7 +21,8 @@
   font-size: 14px;
   padding-top: 12px;
   padding-bottom: 4px;
-  overflow-x: auto;
+  word-break: break-all;
+  white-space: normal;
 }
 
 .Comment-link{
